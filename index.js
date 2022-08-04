@@ -1,83 +1,5 @@
-const getResponse = async (endpoint) => {
-    const res = await fetch(endpoint);
-    if (res.ok) {
-        const resJSON = await res.json();
-        return resJSON;
-    }
-};
-
-const getAllResults = async (baseURL, endpoint, query, value) => {
-    let mergedArray = [];
-    urlStr = baseURL + endpoint;
-    if (query && value) {
-        urlStr += "?" + query + "=" + value;
-    }
-    let res = await getResponse(urlStr);
-    mergedArray.push(...res.results);
-    while (res.info.next) {
-        res = await getResponse(res.info.next);
-        mergedArray.push(...res.results);
-    }
-
-    return { info: res.info, results: mergedArray };
-};
-
-const charCounter = async () => {
-    const locations = await getResponse(
-        "https://rickandmortyapi.com/api/location?name=L"
-    );
-    const episodes = await getResponse(
-        "https://rickandmortyapi.com/api/episode?name=E"
-    );
-    const characters = await getResponse(
-        "https://rickandmortyapi.com/api/character?name=C"
-    );
-    return [locations.info.count, episodes.info.count, characters.info.count];
-};
-
-const episodeLocations = async (page) => {
-    const query = `
-        query {
-            episodes(page: ${page}) {
-                info {
-                    next
-                }
-                results {
-                    name
-                    episode
-                    locations: characters{
-                        origin{
-                            name
-                        }
-                    }
-                }
-            }
-        }
-    `;
-    const res = await fetch("https://rickandmortyapi.com/graphql", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-        },
-        body: JSON.stringify({ query }),
-    });
-    if (res.ok) {
-        const resJSON = await res.json();
-        return resJSON;
-    }
-};
-
-const getAllEpisodes = async () => {
-    let mergedArray = [];
-    let res = await episodeLocations(1);
-    mergedArray.push(...res.data.episodes.results);
-    while (res.data.episodes.info.next) {
-        res = await episodeLocations(res.data.episodes.info.next);
-        mergedArray.push(...res.data.episodes.results);
-    }
-    return mergedArray;
-};
+import charCounter from "./CharCounter.js";
+import getAllEpisodes from "./EpisodeLocations.js";
 
 const doExercises = async () => {
     // corre la función que ejecuta el primer ejercicio
@@ -147,3 +69,5 @@ const doExercises = async () => {
     return JSON.stringify(objResFinal);
 };
 
+const resultado = await doExercises();
+console.log(resultado);

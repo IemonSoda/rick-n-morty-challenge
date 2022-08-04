@@ -1,0 +1,20 @@
+{
+  "name": "rick-n-morty-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IemonSoda/rick-n-morty-challenge.git"
+  },
+  "author": "Gustavo Vidal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IemonSoda/rick-n-morty-challenge/issues"
+  },
+  "homepage": "https://github.com/IemonSoda/rick-n-morty-challenge#readme",
+  "type": "module"
+}
