@@ -1,5 +1,8 @@
 import charCounter from "./CharCounter.js";
 import getAllEpisodes from "./EpisodeLocations.js";
+import msFormatter from "./utils/TimeFormatter.js"
+
+import ProblemFormat from "./Models/Problem.js";
 
 const doExercises = async () => {
     // corre la función que ejecuta el primer ejercicio
@@ -35,33 +38,27 @@ const doExercises = async () => {
     const endTimeEx2 = performance.now();
     // calcula el tiempo que se demora la ejecución
     const ex2timeInMs = endTimeEx2 - startTimeEx2;
-
-    const objResFinal = [
+    const problem1 = new ProblemFormat("Char counter", ex1timeInMs, [
         {
-            exercise_name: "Char counter",
-            time: `${Math.floor(ex1timeInMs / 1000)}s ${ex1timeInMs % 1000}ms`,
-            in_time: ex1timeInMs < 3000,
-            results: [
-                {
-                    char: "l",
-                    count: charCountArray[0],
-                    resource: "location",
-                },
-                {
-                    char: "e",
-                    count: charCountArray[1],
-                    resource: "episode",
-                },
-                {
-                    char: "c",
-                    count: charCountArray[2],
-                    resource: "character",
-                },
-            ],
+            char: "l",
+            count: charCountArray[0],
+            resource: "location",
         },
         {
+            char: "e",
+            count: charCountArray[1],
+            resource: "episode",
+        },
+        {
+            char: "c",
+            count: charCountArray[2],
+            resource: "character",
+        },
+    ]);
+    const objResFinal = [problem1.exercise,
+        {
             exercise_name: "Episode locations",
-            time: `${Math.floor(ex2timeInMs / 1000)}s ${ex2timeInMs % 1000}ms`,
+            time: msFormatter(ex2timeInMs),
             in_time: ex2timeInMs < 3000,
             results: allEpisodes,
         },
