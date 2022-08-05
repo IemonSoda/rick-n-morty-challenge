@@ -1,23 +1,16 @@
+import millisecondFormatter from "../utils/TimeFormatter.js";
 class ProblemFormat {
-    exercise = {
-        exercise_name: "",
-        time: "",
-        in_time: true,
-        results: [
-            {
-                char: "",
-                count: 0,
-                resource: "",
-            }
-        ]
-    }
+    exercise_name = "";
+    time = "";
+    in_time = false;
+    results = [];
     constructor(name, time, results) {
-        this.exercise.exercise_name = name;
-        this.exercise.time = time;
-        this.exercise.inTime = this.#executedInTime(time);
-        this.exercise.results = results;
+        this.exercise_name = name;
+        this.time = millisecondFormatter(time);
+        this.in_time = this.#executedInTime(time);
+        this.results = results;
     }
-    #executedInTime(time){
+    #executedInTime(time) {
         return time < 3000;
     }
 }
